@@ -82,14 +82,14 @@ local function runPath()
     moving = false
 end
 
--- إعادة التشغيل التلقائي (5 ثوانٍ)
+-- إعادة التشغيل التلقائي (تم تعديله إلى 10 ثوانٍ)
 player.CharacterAdded:Connect(function()
     if autoFarmActive then
         toggleButton.Visible = true
         toggleButton.Active = false 
         stopButton.Visible = false 
         
-        for i = 5, 1, -1 do
+        for i = 10, 1, -1 do
             if not autoFarmActive then break end
             toggleButton.Text = tostring(i) .. "s"
             toggleButton.TextColor3 = Color3.fromRGB(255, 165, 0)
@@ -113,28 +113,26 @@ toggleButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- عمل زر Stop المعدل (مع عد تنازلي عند الإيقاف)
+-- عمل زر Stop (تم تعديله إلى 10 ثوانٍ)
 stopButton.MouseButton1Click:Connect(function()
     autoFarmActive = false
     moving = false
     stopButton.Visible = false
     toggleButton.Visible = true
-    toggleButton.Active = false -- قفل الزر أثناء عد الإيقاف
+    toggleButton.Active = false 
     
-    -- تصفير الحركة
     if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         player.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
     end
 
-    -- عد تنازلي 5 ثوانٍ قبل التحول لـ Off
-    for i = 5, 1, -1 do
+    -- عد تنازلي 10 ثوانٍ عند الإيقاف
+    for i = 10, 1, -1 do
         toggleButton.Text = tostring(i) .. "s"
-        toggleButton.TextColor3 = Color3.fromRGB(255, 100, 0) -- لون مغاير للتمييز
+        toggleButton.TextColor3 = Color3.fromRGB(255, 100, 0) 
         task.wait(1)
     end
 
     toggleButton.Text = "Off"
     toggleButton.TextColor3 = Color3.fromRGB(255, 0, 0)
-    toggleButton.Active = true -- الآن مسموح بالضغط مرة أخرى
+    toggleButton.Active = true 
 end)
-
